@@ -25,11 +25,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         // --- Constants to modify per your configuration ---
         // Customer specific IoT endpoint
         // AWS Iot CLI describe-endpoint call returns: XXXXXXXXXX.iot.<region>.amazonaws.com,
-        private const val CUSTOMER_SPECIFIC_ENDPOINT = "a1g1uldeb5uxbm-ats.iot.ap-northeast-2.amazonaws.com"
+        private const val CUSTOMER_SPECIFIC_ENDPOINT = "CUSTOMER_SPECIFIC_ENDPOINT"
 
         // Cognito pool ID. For this app, pool needs to be unauthenticated pool with
         // AWS IoT permissions.
-        private const val COGNITO_POOL_ID = "ap-northeast-2:ce153b8f-b2a0-4e58-935d-821d58be6a21"
+        private const val COGNITO_POOL_ID = "COGNITO_POOL_ID"
 
         // Region of AWS IoT
         private val MY_REGION = Regions.AP_NORTHEAST_2
@@ -41,9 +41,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         clientId = UUID.randomUUID().toString()
 
         credentialsProvider = CognitoCachingCredentialsProvider(
-            context,  // context
-            COGNITO_POOL_ID,  // Identity Pool ID
-            MY_REGION // Region
+                context,  // context
+                COGNITO_POOL_ID,  // Identity Pool ID
+                MY_REGION // Region
         )
 
         // MQTT Client
@@ -70,7 +70,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         Log.d("LOG_TAG", "clientId = $clientId")
         try {
             mqttManager!!.connect(
-                credentialsProvider
+                    credentialsProvider
             ) { status, throwable ->
                 Log.d("LOG_TAG", "Status = $status")
                 runOnUiThread {
@@ -81,18 +81,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
                     } else if (status == AWSIotMqttClientStatusCallback.AWSIotMqttClientStatus.Reconnecting) {
                         if (throwable != null) {
                             Log.e(
-                                "LOG_TAG",
-                                "Connection error.",
-                                throwable
+                                    "LOG_TAG",
+                                    "Connection error.",
+                                    throwable
                             )
                         }
 
                     } else if (status == AWSIotMqttClientStatusCallback.AWSIotMqttClientStatus.ConnectionLost) {
                         if (throwable != null) {
                             Log.e(
-                                "LOG_TAG",
-                                "Connection error.",
-                                throwable
+                                    "LOG_TAG",
+                                    "Connection error.",
+                                    throwable
                             )
                             throwable.printStackTrace()
                         }
@@ -114,16 +114,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
         try {
             mqttManager!!.subscribeToTopic(
-                topic, AWSIotMqttQos.QOS0
+                    topic, AWSIotMqttQos.QOS0
             ) { topic, data ->
                 runOnUiThread {
                     try {
                         Log.e("LOG_TAG", "Subscribe S")
                     } catch (e: UnsupportedEncodingException) {
                         Log.e(
-                            "LOG_TAG",
-                            "Message encoding error.",
-                            e
+                                "LOG_TAG",
+                                "Message encoding error.",
+                                e
                         )
                     }
                 }
@@ -139,16 +139,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
         try {
             mqttManager!!.subscribeToTopic(
-                topic3, AWSIotMqttQos.QOS0
+                    topic3, AWSIotMqttQos.QOS0
             ) { topic, data ->
                 runOnUiThread {
                     try {
                         Log.e("LOG_TAG", "Subscribe S")
                     } catch (e: UnsupportedEncodingException) {
                         Log.e(
-                            "LOG_TAG",
-                            "Message encoding error.",
-                            e
+                                "LOG_TAG",
+                                "Message encoding error.",
+                                e
                         )
                     }
                 }
